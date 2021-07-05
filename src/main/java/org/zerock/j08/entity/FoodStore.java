@@ -22,6 +22,16 @@ public class FoodStore {
 
     private String fname;
 
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<FoodStoreImage> storeImages = new HashSet<>();
+
+    public void addImage(FoodStoreImage storeImage) {
+        storeImages.add(storeImage);
+    }
+
+
+
     // 중복데이터 안잡기 위해 setter 쓴다
     // 조인할 때 곱하면서 중복데이터 발생할 수 있는데, 이를 방지하기 위해서
 
@@ -29,21 +39,21 @@ public class FoodStore {
     // foodStore객체를 가지고 바로 foodMenus에 접근할 수도 있다
 
 
-    @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<FoodMenu> foodMenus = new HashSet<>();
-
-    // 메뉴 추가하는 기능
-    public void addMenu(FoodMenu menu) {
-        foodMenus.add(menu);
-    }
-
-    // 메뉴 제거하는 기능
-    public void removeMenu(Long menuNo) {
-
-        foodMenus = foodMenus.stream()
-                .filter(fm -> fm.getMno().equals(menuNo) == false)
-                .collect(Collectors.toSet());
-        // 여기까지 하면 메뉴가 빠진다
-    }
+//    @Builder.Default
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<FoodMenu> foodMenus = new HashSet<>();
+//
+//    // 메뉴 추가하는 기능
+//    public void addMenu(FoodMenu menu) {
+//        foodMenus.add(menu);
+//    }
+//
+//    // 메뉴 제거하는 기능
+//    public void removeMenu(Long menuNo) {
+//
+//        foodMenus = foodMenus.stream()
+//                .filter(fm -> fm.getMno().equals(menuNo) == false)
+//                .collect(Collectors.toSet());
+//        // 여기까지 하면 메뉴가 빠진다
 }
+
